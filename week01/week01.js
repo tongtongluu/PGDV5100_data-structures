@@ -12,7 +12,6 @@ for (let i = 1; i < 11; i++) {
              }
              else { console.log("Request failed!")}
         });
-    
     } 
 
        
