@@ -1,24 +1,25 @@
 # Initial Setup
 
-Create a new [GitHub](https://github.com/) repository and name it `data-structures`  
-All of your work for this class should be kept in this (well-organized!) repository.
+I Create a new [GitHub] repository and name it `PGDV5100_data-structures`  
 
 # Weekly Assignment 1
 
-### Due Friday 8/30 at 6:00pm
-
-## Part One
-
-1. Using Node.js (in Cloud 9), make a request for each of the ten "Meeting List Agenda" pages for Manhattan. **Important: show the code for all ten requests.**    
 
 
-> Note: you will creating your own Cloud 9 environment from your personal AWS account for your work in this course. Do not use the Major Studio AWS account that Daniel sent you. You will incur some expenses on AWS but they are very unlikely to exceed what you get on the free tier plus the $100 credit you receive from signing up for AWS Educate. 
+## Procedutes
 
-2. Using Node.js: For each of the ten files you requested, save the body as a **text file** to your "local" environment (in AWS Cloud9).
+1. figured out how to link aws with my github account   
 
-3. Study the HTML structure and tags and begin to think about how you might parse these files to extract relevant data for these AA meetings.
 
-4. Update your GitHub repository with the relevant files: your `js` file and ten `txt` files, plus a `md` file with your documentation. In Canvas, submit the URL of the specific location of this work within your `data-structures` GitHub repository. 
+
+2. Used Node.js: Use the initial starter code provided by the professor to generate ten txt files requested from the ten urls.
+
+3. Fixed the bug. that variable i did not go through the loop
+
+4. Used let instead var to limit the scope of i, make it only exist through the loop
+
+5. Optimized the code by inserting several loops to generate the url address without hard code it
+
 
 ## Starter code
 
@@ -37,3 +38,6 @@ request('https://parsons.nyc/thesis-2019/', function(error, response, body){
 });
 ```
 ### Thoughts
+
+It takes time  to get familiar with the JS syntax. 
+the indentation is not as important as python, we use () to differentiate the scope.
