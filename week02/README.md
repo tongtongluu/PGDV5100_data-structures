@@ -9,35 +9,17 @@
 ### this is very important for me to design how I should work. detailed notes are in the js file(comments for each line)
 
 
-## Starter Code  
-
+##  Some Notes for Code  (more details in js file)
 ```javascript
-// npm install cheerio
+// choose the needed information based on style
+$('td[style="border-bottom\\:1px solid #e3e3e3; width\\:260px"]').each(function(i, elem) {
 
-var fs = require('fs');
-var cheerio = require('cheerio');
+// can also use find to extract text from h4 element, some information are missing: 
+const venue = $(elem).find('h4').text().split('<br>');
 
-// load the thesis text file into a variable, `content`
-// this is the file that we created in the starter code from last week
-var content = fs.readFileSync('data/thesis.txt');
-
-// load `content` into a cheerio object
-var $ = cheerio.load(content);
-
-// print (to the console) names of thesis students
-$('h3').each(function(i, elem) {
-    console.log($(elem).text());
-});
-
-// write the project titles to a text file
-var thesisTitles = ''; // this variable will hold the lines of text
-
-$('.project .title').each(function(i, elem) {
-    thesisTitles += ($(elem).text()).trim() + '\n';
-});
-
-fs.writeFileSync('data/thesisTitles.txt', thesisTitles);
+//push elemenets into the empty arrary,trim may contain some problems, need to pay extra attention
+address08.push(street.trim().split(',')[0]);
 ```
 
 ## Thoughts:
-## Learn how to right the ask questions for help. ";/''" matters a lot to JS. Remember to try the second method out by using nodes value. 
+## I have tried many methods to figure out the assignment 2. Learn how to right the ask questions for help. ";/''" matters a lot to JS. Remember to try the second method out by using nodes value. 
