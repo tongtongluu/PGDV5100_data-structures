@@ -43,6 +43,7 @@ address08.push(street.trim().split(',')[0]);
     
  ); 
  console.log(address08);
+ console.log(address08.length);
 fs.writeFileSync('cleanedAddress.txt', address08); 
     
     
