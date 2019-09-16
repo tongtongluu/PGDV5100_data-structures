@@ -1,5 +1,5 @@
 # ignore .env file
-./week3/.env
+**/.env
 # ignore c9 
 .c9
 *.c9
