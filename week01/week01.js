@@ -11,8 +11,7 @@ for (let i = 1; i < 11; i++) {
                  fs.writeFileSync( '/home/ec2-user/environment/week01/data/m'+i+'.txt', body);
              }
              else { console.log("Request failed!")}
-        });
-    } 
+        });    } 
 
        
        
