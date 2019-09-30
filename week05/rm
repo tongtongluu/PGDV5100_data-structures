@@ -2,7 +2,7 @@
 
 ### Due Tuesday 10/1 at 9:00am
 
-I decided to create a learning process blog for this course 
+I decided to create a learning process blog for the data sturtures couse which record the key knowledge i learnt and detailed also personalized reflections for each week 
 
 ## Setup and preparation
 
@@ -24,7 +24,7 @@ Some decisions that will help with this drawing:
  Those information varies in data type so I do not want to limit the data too strickly. 
  the main porpose for this table is to incorporate the information i get from the learning process of data structures class. 
  Therefore, I manually created the primay key, which is the id to entries. followed by the sort key,which is the name of the assignment. 
- And all the other information about each assignemtn is paralled. 
+ And all the other information about each assignment is paralled. 
 
 ### Part Two: Create some data for the table in your database
 
