@@ -1,0 +1,109 @@
+# Weekly Assignment 5
+
+### Due Tuesday 10/1 at 9:00am
+
+I decided to create a learning process blog for this course 
+
+## Setup and preparation
+
+follow the insturctions carefully
+
+#### Steps to create a table in DynamoDB: 
+
+this part I recreated the table for many times. because I forgot to set up the data type for certain keys.
+And I feel hesitated which one should be used as the primary key. should be the time, or the file name or I should created primary key manully
+
+## Assignment
+
+### Part One: Plan
+
+Using the Hills text as a starting point (but feel free to strike out on your own), draw a data model for your "Process Blog" data to be stored in this database table. Include all the content/data/variables from your "Process Blog" project that you believe to be relevant. Upload an image (`png` format) of your drawing to your GitHub repository.  
+
+Some decisions that will help with this drawing:  
+ unstructured table, because i want to update the proces blog frequently. I incorporated the name of each assignments, time, duration,mode of learning,  key information for each assignment, and I included and my detailed thoughts in the end.
+ Those information varies in data type so I do not want to limit the data too strickly. 
+ the main porpose for this table is to incorporate the information i get from the learning process of data structures class. 
+ Therefore, I manually created the primay key, which is the id to entries. followed by the sort key,which is the name of the assignment. 
+ And all the other information about each assignemtn is paralled. 
+
+### Part Two: Create some data for the table in your database
+
+In Part Three of this assignment, you will be using [`putItem`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property) in the [AWS SDK for JavaScript in Node.js](https://aws.amazon.com/sdk-for-node-js/). Reference the [DynamoDB class](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html) for information about the [PutItem method](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property) and data types. The documentation shows how the items should be mapped and how to specify data types. In preparation for Part Three, the following starter code creates several "Items" destined for DynamoDB (adhering to the expected Item attributes and values), storing them in an array named `blogEntries`: 
+
+```javascript
+var blogEntries = [];
+
+class blogEntry {
+  constructor(primaryKey, date, mode, blogName,  duration, fileNumber, includePics,keyInfo,thoughts) {
+    // add primary key manually, may not be necessary?
+    this.pk = {};
+    this.pk.N = primaryKey.toString();
+    
+ 
+    this.date = {};
+    this.date.S = new Date(date).toDateString();
+    
+    
+    this.mode = {};
+    this.mode.S = mode;
+    
+   // create blogName as the sort key 
+    this.blogName = {};
+    this.blogName.S = blogName;
+    
+    
+    this.duration = {};
+    this.duration.N = duration.toString();
+    
+    this.fileNumber = {};
+    this.fileNumber.N = fileNumber.toString();
+    
+    this.includePics = {};
+    this.includePics.BOOL = includePics;
+    
+    
+    if (keyInfo != null) {
+      this.keyInfo = {};
+      this.keyInfo.SS = keyInfo;
+    }
+    if (thoughts != null) {
+      this.thoughts = {};
+      this.thoughts.S = thoughts;
+    }
+
+}}
+
+blogEntries.push(new blogEntry('0','2019-08-30','confused','week01','3','12',false, ["aws-account","github-account","loops"], "Used let instead var to limit the scope of i, make it only exist through the loop, It takes time to get familiar with the JS syntax. the indentation is not as important as python, we use () to differentiate the scope."));
+blogEntries.push(new blogEntry('1','2019-09-09','did some detaild observation','week02','4','4',false,  ["html-structure","unique-style-search"], "remember to figure out the solution of nodes value."));
+blogEntries.push(new blogEntry('2','2019-09-16','figured it out quickly','week03','3.5','3',false,  ["use-index","git-ignore"], "study the stuructures first, for example the nested structure"));
+blogEntries.push(new blogEntry('3','2019-09-23','be carefule with the design', 'week04','3','5',true,  ["detailed-rm","OLAP","OLTP","database-design"], "I used a Normalized Data Model, the hierarchy of the data: the main table is the meeting general table, which contains two foreign keys that linked with other table for additional information"));
+//console.log(blogEntries);
+```
+
+### Part Three: Populate your database
+
+
+### Starter code: 
+
+
+
+```javascript
+var AWS = require('aws-sdk');
+AWS.config = new AWS.Config();
+AWS.config.region = "us-east-1";
+
+var dynamodb = new AWS.DynamoDB();
+
+var params = {};
+params.Item = blogEntries[0]; 
+params.TableName = "processblog";
+
+dynamodb.putItem(params, function (err, data) {
+  if (err) console.log(err, err.stack); // an error occurred
+  else     console.log(data);           // successful response
+});
+```
+
+### Thoughts
+I thought that one was easy, but I spent toooo many times creating and deleting the table again and again. This situation should be avoided with carefurlly checking the data types first. 
+Also, I need some time to polish my previous readme files. I thought some of them are pretty basic and I wrote most of my thoughts in the js file as comments.
