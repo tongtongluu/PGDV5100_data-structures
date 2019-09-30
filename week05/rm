@@ -25,7 +25,8 @@ Some decisions that will help with this drawing:
  the main porpose for this table is to incorporate the information i get from the learning process of data structures class. 
  Therefore, I manually created the primay key, which is the id to entries. followed by the sort key,which is the name of the assignment. 
  And all the other information about each assignment is paralled. 
-
+Sketch of the database  
+![part1](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/week05/part1_2.png)
 ### Part Two: Create some data for the table in your database
 
 In Part Three of this assignment, you will be using [`putItem`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property) in the [AWS SDK for JavaScript in Node.js](https://aws.amazon.com/sdk-for-node-js/). Reference the [DynamoDB class](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html) for information about the [PutItem method](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property) and data types. The documentation shows how the items should be mapped and how to specify data types. In preparation for Part Three, the following starter code creates several "Items" destined for DynamoDB (adhering to the expected Item attributes and values), storing them in an array named `blogEntries`: 
@@ -81,7 +82,8 @@ blogEntries.push(new blogEntry('3','2019-09-23','be carefule with the design', '
 ```
 
 ### Part Three: Populate your database
-
+result of the database  
+![part3](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/week05/table%20screen%20shot.PNG)
 
 ### Starter code: 
 
