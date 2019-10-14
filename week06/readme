@@ -1,0 +1,224 @@
+# Weekly Assignment 6
+
+### Due Monday 10/14 at 6:00pm
+
+working with the AA data from PostgreSQL database and the Dear Diary data in DynamoDB. wrote queries for both.
+
+## Part One: Write and execute a query for  AA data PostgreSQL
+
+for this part, i did not follow the original design of my table, i tried to extract all the information from the assigned page.
+
+
+#### Starter Code: 
+
+#### create table: for the time variables such as start, end, day. I made them into strings, and then created supported columbs to turn hours into numbers from 0 to 24, days from 1 to 7.
+Thus I can write efficient queries for certain time range.
+
+```javascript
+var thisQuery = "CREATE TABLE aameeting (buildingName VARCHAR(50), buildingAddress VARCHAR(100),Lat_ double precision, Long_ double precision, zipCode VARCHAR(10), meetingName VARCHAR(50), meetingNote VARCHAR(100), meetingDay VARCHAR(20), meetingDayNum INT, meetingStart VARCHAR(20), meetingStartHour INT, meetingStartMin INT, meetingEnd VARCHAR(20),meetingEndHour INT, meetingEndMin INT, specialInterest VARCHAR(100), meetingType VARCHAR(10), typeDetails VARCHAR(20));";
+```
+#### extract information: For the address informaiton which do not loop through the meetings, I used to location to extract the inforrmation. For those meetints that hold in one place for many times, i use regular expression.
+this part is the most time consuming part.for puting them into right order with nested loops.
+```javascript
+// add zipcode
+let zList = [];
+$('td').each(function(i, elem) {
+    if ($(elem).attr("style") == "border-bottom:1px solid #e3e3e3; width:260px" ) {
+         var zipcodeList = $(elem).html().split('<br>')[3].trim().split(' ').pop();
+         zList.push(zipcodeList);
+         //console.log(zipcodeList)
+    }
+});
+```
+```javascript
+// add meeting note into the object
+ let mtDetails = [ ];
+ $('tr').each(function(i, elem) {
+    if ($(elem).attr("style") == "margin-bottom:10px" ) {
+        let meetings = $(this).html().replace(/^\s*$[\n\r]{1,}/gm, '').replace(/\s+/g,'').split('<br><br>')[1].replace('<br>','').split('</div>')[0].split('<divclass="detailsBox">')[1];
+        //if(meetings == undefined){meetings = 'no meeting details'}
+        mtDetails.push(meetings);
+    }
+});
+
+```
+```javascript
+let Results = [];
+for(let i = 0; i < bdName.length; i++){
+    for(let j = 0; j< mtDay[i].length; j++){
+        let result = {};
+        //console.log(mtDay[i])
+        //console.log(mtStart[i])
+        result.buildingName = bdName[i];
+        result.buildingAddress = mtAddress[i];
+        result.geoLocation = geoLocation[i];
+        result.zipCode = zList[i];
+        result.meetingName = mtList[i];
+        result.meetingNote = mtDetails[i];
+        result.meetingDay = mtDay[i][j].day;
+        result.meetingDayNum = mtDay[i][j].dayNum;
+        result.meetingStart = mtStart[i][j].start;
+        result.meetingStartHour = mtStart[i][j].startTime;
+        result.meetingStartMin = mtStart[i][j].startMin;
+        result.meetingEnd = mtEnd[i][j].end;
+        result.meetingEndHour = mtEnd[i][j].endTime;
+        result.meetingEndMin = mtEnd[i][j].endMin;
+        result.specialInterest = sInt[i][j];
+        result.meetingType = mtType[i][j];
+        result.typeDetails = tpDetails[i][j];
+        Results.push(result);
+    }
+}
+```
+
+
+
+#### insert data into table: for this part, i learned the difference between "", and '' when inserting data, we should be very specific and details oriented.
+```javascript
+see the details inthe js file
+```
+
+
+
+
+#### write queries: I looked for those meetings after monday and started before noon to test my sql table,
+```javascript
+// Connect to the AWS RDS Postgres database
+const client = new Client(db_credentials);
+client.connect();
+
+// Sample SQL statement to query the entire contents of a table: 
+//var thisQuery = "SELECT * FROM aameeting;";
+var thisQuery = "SELECT meetingname AS MEETINGNAME, meetingday, meetingstart, meetingend, typedetails FROM aameeting WHERE meetingdaynum > 1 and meetingstarthour <= 12;";
+
+client.query(thisQuery, (err, res) => {
+    console.log(err,res.rows);
+    client.end();
+});
+```
+
+
+Here are a few lines of the output to the console: 
+
+```
+ null [ { meetingname: 'AA IT WORKS  II - AA It Works II',
+    meetingday: 'Wednesdays',
+    meetingstart: '10:00AM',
+    meetingend: '11:00AM',
+    typedetails: 'Beginnersmeeting' },
+  { meetingname: 'AA IT WORKS  II - AA It Works II',
+    meetingday: 'Thursdays',
+    meetingstart: '10:00AM',
+    meetingend: '11:00AM',
+    typedetails: 'BigBookmeeting' },
+  { meetingname: 'AA IT WORKS  II - AA It Works II',
+    meetingday: 'Fridays',
+    meetingstart: '10:00AM',
+    meetingend: '11:00AM',
+    typedetails: 'Stepmeeting' },
+  { meetingname: 'FELLOWSHIP AT NOON - Fellowship At Noon',
+    meetingday: 'Wednesdays',
+    meetingstart: '12:15PM',
+    meetingend: '1:15PM',
+    typedetails: 'Stepmeeting' },
+  { meetingname: 'PROMISES TWO FOR ONE - Promises Two For One',
+    meetingday: 'Sundays',
+    meetingstart: '9:30AM',
+    meetingend: '10:30AM',
+    typedetails: 'Beginnersmeeting' },
+  { meetingname: 'UPTOWN BIG BOOK WORKSHOP - ',
+    meetingday: 'Saturdays',
+    meetingstart: '9:30AM',
+    meetingend: '11:00AM',
+    typedetails: 'BigBookmeeting' } ]                 
+```
+
+## Part Two: Write and execute a query for your Dear Diary data DynamoDB
+
+In my database called LearningProcessBlog, i recorded my reflections for every class i took during this semester. 
+I use time as partition key, and category as the sort key. 
+#### create table
+```javascript
+    // create category as the sort key
+    this.category = {};
+    this.category.S = category.toString();
+    
+    this.weekOrder = {};
+    this.weekOrder.N = weekOrder.toString();
+    
+    
+    this.mode = {};
+    this.mode.S = mode;
+    
+   // create category as the sort key 
+   
+   
+    this.blogName = {};
+    this.blogName.S = blogName;
+    
+    
+    this.duration = {};
+    this.duration.N = duration.toString();
+    
+    this.fileNumber = {};
+    this.fileNumber.N = fileNumber.toString();
+    
+    this.includePics = {};
+    this.includePics.BOOL = includePics;
+    
+    
+    if (keyInfo != null) {
+      this.keyInfo = {};
+      this.keyInfo.SS = keyInfo;
+    }
+    if (thoughts != null) {
+      this.thoughts = {};
+      this.thoughts.S = thoughts;
+    }
+
+}}
+```
+
+#### write query
+my concern here is that: when using time as the primary key, I cannot query a certain range of time, I can only pick a specific time. I know the easier fix here can be use category as the partition key
+and the time as the sort key. But i decided to keep it this way to see if there is any other solutions.
+```javascript
+var params = {
+    TableName : "LearningProcessBlog",
+    KeyConditionExpression: "#dt = :minDate and #cat = :category" ,
+    ExpressionAttributeNames: { 
+        "#dt" : "dateTimeDetail",
+        "#cat" : "category"
+    },
+    ExpressionAttributeValues: { // the query values
+        ":minDate": {S: new Date("30 August 2019 14:48 UTC").toISOString()},
+        ":category": {S: "datastructure"}
+    }
+};
+
+
+```
+
+#### result
+```javascript
+Query succeeded.
+***** ***** ***** ***** ***** 
+ { dateTimeDetail: { S: '2019-08-30T14:48:00.000Z' },
+  weekOrder: { N: '1' },
+  thoughts:
+   { S:
+      'Used let instead var to limit the scope of i, make it only exist through the loop, It takes time to get familiar with the JS syntax. the indentation is not as important as python, we use () to differentiate the scope.' },
+  mode: { S: 'confused' },
+  includePics: { BOOL: false },
+  category: { S: 'datastructure' },
+  blogName: { S: 'week01' },
+  duration: { N: '3' },
+  fileNumber: { N: '12' },
+  keyInfo: { SS: [ 'aws-account', 'github-account', 'loops' ] } }
+```
+
+
+
+
+## Thoughts
+this time spent most of the time in sql part. need to figure out the partition key problem for nosql. know how objects(dictionary) works.
