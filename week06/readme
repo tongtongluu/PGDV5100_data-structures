@@ -7,7 +7,7 @@ working with the AA data from PostgreSQL database and the Dear Diary data in Dyn
 ## Part One: Write and execute a query for  AA data PostgreSQL
 
 for this part, i did not follow the original design of my table, i tried to extract all the information from the assigned page.
-
+result: ![part1](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/week06/sql.png)
 
 #### Starter Code: 
 
@@ -134,6 +134,7 @@ Here are a few lines of the output to the console:
 ```
 
 ## Part Two: Write and execute a query for your Dear Diary data DynamoDB
+result: ![part2](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/week06/noSql.png)
 
 In my database called LearningProcessBlog, i recorded my reflections for every class i took during this semester. 
 I use time as partition key, and category as the sort key. 
