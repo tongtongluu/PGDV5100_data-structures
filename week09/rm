@@ -1,0 +1,31 @@
+# Weekly Assignment 9
+
+### Due Monday, 11/4 at 6:00pm
+
+
+## Setup and preparation
+
+#### PART ONE
+
+Decide to use postgreSQL , the data is somewhat well structured, with not many other kinds of formats.
+Here I found the datatype is differeent, so I turn boolean into number.
+
+**/setup.js**
+
+```javascript 
+// Sample SQL statement to create three tables, but this time only has the data of the address table: 每张表一定要有pk，这个sql确保了character文字形式也能作为primary key，否则的话要用数字
+var thisQuery = "CREATE TABLE sensorData ( sensorValue real, sensorTime timestamp DEFAULT current_timestamp );";
+// Sample SQL statement to delete a table: 
+//var thisQuery = "DROP TABLE sensorData;"; 
+
+```
+
+#### PART TWO
+
+at first the .env file did not work, I need to install dotenv again
+const dotenv = require('dotenv').config();
+
+#### PART THREE
+
+the result looks like this:
+![part1](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/week09/sample output.png)
