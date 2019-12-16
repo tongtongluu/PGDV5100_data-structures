@@ -1,0 +1,31 @@
+<head>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <link href="https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' type='text/css' href='blogg.css'/>
+  
+        <title>Blog</title>
+</head>
+<body>
+    <p>
+        <a href='./index.html'> Home </a>
+    </p>
+    <p>
+        <a href='./blog.html'> PerviousVersion </a>
+    </p>
+     <h1>Process Blog</h1>
+    <select class="custom-select" name="category">
+        <option value="all">All Subjects</option>
+        <option value="dataaesthetic">Data Aesthecits</option>
+        <option value="datastructure">Data Structures</option>
+        <option value="majorstudio">Major Studio</option>
+        <option value="statistics">Statistics</option>
+    </select>
+    <div id='blogpost' class="row text-left"></div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="blogg.js"></script>
+    <style>
+    #custome-select { 
+        display:flex }
+   </style>
+</body>

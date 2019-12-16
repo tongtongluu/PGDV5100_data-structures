@@ -1,0 +1,65 @@
+<head>
+    <!-- You can link a stylesheet just for this blog.html file to use or use the same one that was used in index.html  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' type='text/css' href='blog.css'/>
+</head>
+<body>
+<div class="col-sm">
+    <div id = "header">
+        <h1> Learning Process</h1>
+        <p><a href='./index.html'>Go back to the menu</a></p>
+    </div>
+<div>
+<select class="custom-select" name="course">
+    <option selected>Blogpost Category</option>
+    <option value="all">All Courses</option>
+    <option value="dataaesthetic">Data Aesthetic</option>
+    <option value="majorstudio">Major Studio</option>
+    <option value="datastructure">Data Structures</option>
+    <option value="statistics">Statistics</option>
+</select>
+
+<select class="custom-select" name="week">
+    <option selected>Blogpost Week</option>
+    <option value="1">Week01</option>
+    <option value="2">Week02</option>
+    <option value="3">Week03</option>
+    <option value="4">Week04</option>
+    <option value="5">Week05</option>
+    <option value="6">Week06</option>
+    <option value="7">Week07</option>
+    <option value="8">Week08</option>
+    <option value="9">Week09</option>
+    <option value="10">Week10</option>
+</select>
+</div>
+    
+  
+
+<div id="anchor"></div>
+    
+    <!-- This div is where we will put information using the blog.js file -->
+    
+    <div class="card text-center blogposts">
+  <!--<div class="card-header">-->
+  <!--  Featured-->
+  <!--</div>-->
+  <!--<div class="card-body">-->
+    <!--<h5 class="card-title">Special title treatment</h5>-->
+    <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+  <!--</div>-->
+  <!--<div class="card-footer text-muted">-->
+  <!--  2 days ago-->
+  <!--</div>-->
+</div>
+    <!--<div class="blogposts"></div>-->
+</div>
+
+</div>
+<!-- You must include the full version of jquery for ajax to work. The version included with bootstrap is the lite version -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="blog.js"></script>
+
+</body>

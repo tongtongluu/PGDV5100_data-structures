@@ -1,0 +1,161 @@
+## Data Structure<br/>
+# Final Assignment 1 <br/>
+---------------------------------------------------
+#### Assignment Date: 20th November 2019<br/>
+#### Assignment Due: 16th December 2019 <br/>
+#### the website link: http://3.84.66.212:8080/ <br/>
+[Click Here](http://3.84.66.212:8080/) <br/>
+--------------------------------------------------
+### AA MEETING DEMO<br/>
+the information on my app about aa meeting include:  
+* A landing page, with references to the three projects and its raw data accordingly. 
+Use leaf as the main theme, indicate that I am working on the structure of data. Very simple and clear that the background color is purely white.
+I also made a version for mobile phone that the side bar will only appear when the screen is small enough.
+![0](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/finalprojects/demo/0_landing.png)
+* A page that shows the AA data： link to the raw data
+![1](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/finalprojects/demo/1_bar.png)
+![2](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/finalprojects/demo/1_aaraw.png)
+* A page that shows the AA map with the query
+![3](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/finalprojects/demo/1_aamap_result.png)
+
+
+#### Assignment requirements can be found [here](https://github.com/visualizedata/data-structures/blob/master/final_assignment_1.md) <br/>
+
+#### Project process:
+1. Parsed all the data for 10 zones in one whole loop
+final files of parsing one of the page can be seen [here.](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/Week07)<br/>
+
+``` code
+let content = [];
+for(let i = 0; i < zone.length; i++){
+    const contentDetails = fs.readFileSync(path + zone[i] + '.txt');
+    content.push(contentDetails);
+}
+
+// read original file with location and geo location
+const originalLocation = JSON.parse(fs.readFileSync('/home/ec2-user/environment/week07/addressFinal.json'));
+//console.log(originalLocation.length);
+// load `content` seperatly into cheerio object
+let addressAll= [ ]; 
+let geoInfo = [ ];
+let bdNameAll = [ ];
+let mtAll = [ ];
+let mtDetails = [ ];
+
+    // add geolocation from the original file
+for(let i = 0; i < originalLocation.length; i++){
+        geoInfo.push(originalLocation[i].latLong);
+}
+//console.log(geoInfo)
+for(let i = 0 ; i < content.length; i++){
+    let zoneNumber = i + 1;
+    let $ = cheerio.load(content[i]);
+    // find  address, city. state, zoneNumber,zipCode and meetingName
+        $('td').each(function(i, elem) {
+            var thisMeeting = {};
+            if ($(elem).attr("style") == "border-bottom:1px solid #e3e3e3; width:260px") {
+                thisMeeting.streetAddress = $(elem).html().split('<br>')[2].trim().split(',')[0];
+                thisMeeting.city = "New York";
+                thisMeeting.state = "NY";
+                thisMeeting.zoneNumber = zoneNumber;
+                thisMeeting.zipCode = $(elem).html().split('<br>')[3].trim().split(' ').pop();
+                thisMeeting.meetingName = $(elem).html().split('<br>')[1].trim().split('</b>')[0].split('<b>')[1];
+                addressAll.push(thisMeeting);
+        }
+    });
+    
+```
+2. Geocoding the Address</br>
+I first extract all the address and then used [TAMU Geo Services](https://geoservices.tamu.edu/) to Geocode each address of the json. 
+the result of geocoding can be seen [here](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/Week07). The end json file is called addressFinal</br>
+<br/>
+
+3. Combine all the other information into the json file, including city zone, address, city, state, zip code, longitude, latitude, meeting name, meeting start time, meeting end time, meeting day, meeting type and accessibility. <br/>
+the result of geocoding can be seen [here](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/Week07). 
+<br/>
+
+4. User Interface Design </br>
+My design is more complicated than the current result, and i should've combine all the information into pop ups for each marks instead of cards.
+The sketch could be seen [here](https://github.com/tongtongluu/PGDV5100_data-structures/blob/master/Week11) <br/>
+<br/>
+
+
+5. Creating Query</br>
+in order to make the page pricise and clear, i wrote quries into helper async functions, and on each page I only need to call that funciton</br>
+```code
+//4. function that used for aa meeting to query based on meeting days and meeting type
+async function dayFilter(day, type) {
+        return new Promise(resolve => {
+             dayy = day || moment().format("dddd") + 's'; 
+             typee = type;
+            var output = {};
+            const client_aa = new Client(db_aa);
+            client_aa.connect();
+            var thisQuery;
+            if(day == '*' , type =="*"){
+                thisQuery = `SELECT lat_, long_, buildingname,  zipcode, json_agg(json_build_object('location', buildingname, 'address', buildingaddress,'specialinterest',specialinterest, 'meeting', meetingname, 'day', meetingday, 'types', meetingtype,'shour', meetingstart)) as meeting
+            FROM aameetingALL
+            GROUP BY  lat_, long_, zipCode,buildingName
+            ;`;
+            }
+            
+            else if(day !="*", type !="*"){thisQuery = `SELECT lat_, long_, buildingname,  zipcode, json_agg(json_build_object('location', buildingname, 'address', buildingaddress,'specialinterest',specialinterest, 'meeting', meetingname, 'day', meetingday, 'types', meetingtype,'shour', meetingstart)) as meeting
+            FROM aameetingAll
+            WHERE meetingDay = '` + dayy + `' AND meetingtype = '` + typee + `'
+            GROUP BY buildingName, lat_, long_, zipCode
+            ;`}
+            
+            else if(day != '*' , type =="*"){thisQuery = `SELECT lat_, long_, buildingname,  zipcode, json_agg(json_build_object('location', buildingname, 'address', buildingaddress,'specialinterest',specialinterest, 'meeting', meetingname, 'day', meetingday, 'types', meetingtype,'shour', meetingstart)) as meeting
+            FROM aameetingAll
+            WHERE meetingDay = '` + dayy + `' 
+            GROUP BY buildingName, lat_, long_, zipCode
+            ;` }
+            else if(day == '*' , type !="*"){thisQuery = `SELECT lat_, long_, buildingname,  zipcode, json_agg(json_build_object('location', buildingname, 'address', buildingaddress,'specialinterest',specialinterest, 'meeting', meetingname, 'day', meetingday, 'types', meetingtype,'shour', meetingstart)) as meeting
+            FROM aameetingAll
+            WHERE meetingtype = '` + typee + `'
+            GROUP BY buildingName, lat_, long_, zipCode
+            ;` }
+            
+            client_aa.query(thisQuery,  async (err, res) => {
+                if (err){console.log(err)}
+                console.log(res.rows);
+
+                await fs.readFile('./aahandle.html', 'utf8', (error, data) => {
+                  var template = handlebars.compile(data);
+                    output.meetings= res.rows;
+                   var html = template(output);
+                    resolve([html,res.rows]);
+            });
+            // client_aa.end();
+        });
+            
+        })
+}
+
+```
+This query finds the matching meeting based on meeting type and meeting days, markers with pop ups of the place and detailed information showed in cards bellow. <br/>
+<br/>
+
+#### Some questions to answer:
+1. Information that user need<br/>
+They need to find the most suitable meetings for them based on the queries they offered. Also, it will be better if my app can sort the most
+convenient places or times for them to choose from
+2. relavent data:
+data should be able to answer some basic quesitons: when, where, what, which kind
+information such as special needs may not be very necessary here
+3. each marker represents a place that holds meetings
+4. the defalut query is meetings that on monday and with type bb, users can swich to all meeting mode to find everthing available in the database.
+
+
+
+#### Relections based on the assessment criterias:
+the intergrity of data and database:
+I wrote a whole loop wrapping up the 10 different zones. but i find the data contains several errors.
+the address and geocode address part is all good. But when i loop through each meetings, the nested loop kinda mixed together. 
+There are two zones of data which is not precisely right and I figured that out in the last minute. The dataabse itself works fine.</br>
+I decided to write it in the reflection and make improvements later.
+
+<br/>
+I have got helps from Neil, and youtube tutorials that his code gave me general ideas about the query flow.
+The current app is not that close to my desired design, will polish it during the break
+Acknowledgement : Neil Oliver, Coding Train

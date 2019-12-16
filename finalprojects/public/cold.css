@@ -1,0 +1,43 @@
+*{
+	margin:0px;
+	padding:0px;
+	box-sizing: border-box;
+}
+@media screen and (max-width:1024px){
+	.nav-links{
+		width:60%;
+	}
+}
+
+
+body{
+	margin:0;
+	background-color:#FAF9F9;
+	color:rgb(0,0,0);
+	font-size:17px;
+	line-height:1.6;
+	font-family: 'Chakra Petch', sans-serif;
+
+}
+
+#showcase{
+	background-size:cover;
+	background-position:center;
+	height:100vh;
+	
+}
+
+#showcase .container-fluid{
+	justify-content:center;
+	align-items:center;
+	padding:0 20px;
+}
+
+#showcase .button{
+	font-size:18px;
+	text-decoration:none;
+	color:#926239;
+	border:#926239 1px solid;
+	padding:10px 20px;
+	border-radius:10px;
+}

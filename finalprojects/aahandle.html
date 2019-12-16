@@ -1,0 +1,26 @@
+{{#meetings}}
+      <div class="location" data-latlon="{{lat_}},{{long_}}">
+        {{#meeting}}
+        <div class="card-group">
+          <div class="card" style="width: 50rem;">
+            <div class="p-3 mb-2 bg-primary text-white">
+              <div class="card-header">
+                <h5><p>{{meeting}}</p></h5>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <span class="border border-primary">
+                  <li class="list-group-item"><h7>WHERE: {{location}}</h7></li>
+                  <li class="list-group-item"><h7>WHERE: {{address}}</h7></li>
+                  <li class="list-group-item"><h7>WHEN: {{day}}</h7></li>
+                  <li class="list-group-item"><h7>WHEN: {{shour}}</h7></li>
+                  <li class="list-group-item"><h7>WHAT: {{types}}</h7></li>
+                </span>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {{/meeting}}
+      </div>
+{{/meetings}}

@@ -1,0 +1,30 @@
+h3 {
+    font-size: 1.1rem;
+}
+
+.blogposts {
+    display: block;
+}
+
+.dropdown {
+    display: block;
+}
+
+.custom-select {
+    background-color: grey;
+    color: white;
+    display: inline-block;
+    width: 300px;
+    outline: none !important;
+}
+
+
+body{
+	margin:0;
+	background-color:#FAF9F9;
+	color:rgb(0,0,0);
+	font-size:16px;
+	line-height:1.6;
+	font-family: 'Chakra Petch', sans-serif;
+	background-image:url('/img/pic.jpg');
+}

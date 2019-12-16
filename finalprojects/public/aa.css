@@ -1,0 +1,36 @@
+#mapid {
+    height: 50%;
+    width: 100%;
+}
+
+.form-control-range {
+    width: 300px;
+}
+
+#card-group{
+	display:flex;
+}
+#form-group{
+	display:flex;
+}
+
+*{
+	margin:0px;
+	padding:0px;
+	box-sizing: border-box;
+}
+@media screen and (max-width:1024px){
+	.nav-links{
+		width:60%;
+	}
+}
+
+
+body{
+	margin:0;
+	background-color:#FAF9F9;
+	color:rgb(0,0,0);
+	font-size:16px;
+	line-height:1.6;
+	font-family: 'Chakra Petch', sans-serif;
+}
