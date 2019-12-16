@@ -314,8 +314,8 @@ async function processBlog(minDate, maxDate, course){
     return new Promise(resolve => {
         var output = {};
         
-        minDate = minDate || "August 1 2019"
-        maxDate = maxDate || "December 10 2020"; 
+        minDate = minDate || "August 1 2000"
+        maxDate = maxDate || "December 10 2100"; 
         course = course || 'all';
         // console.log(new Date(maxDate).toLocaleString())
         output.blogpost = [];
